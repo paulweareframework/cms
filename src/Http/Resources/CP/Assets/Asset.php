@@ -76,6 +76,16 @@ class Asset extends JsonResource
 
     protected function previewUrl()
     {
+        $previewImage = config('statamic.assets.preview_image');
+        $presets = config('statamic.cp.thumbnail_presets');
+
+        if (! is_null($previewImage) && array_key_exists($previewImage, $presets)) {
+            return cp_route('assets.thumbnails.show', [
+                'encoded_asset' => base64_encode($this->id()),
+                'size' => $previewImage,
+            ]);
+        }
+        
         // Public asset containers can use their regular URLs.
         // Private ones don't have URLs so we'll generate an actual-size "thumbnail".
         return $this->container()->accessible() ? $this->url() : $this->thumbnailUrl();
