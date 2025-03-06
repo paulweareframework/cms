@@ -157,4 +157,6 @@ return [
     'thumbnail_presets' => [
         // 'medium' => 800,
     ],
+
+    'asset_preview_image' => null,
 ];
